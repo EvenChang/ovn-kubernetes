@@ -305,7 +305,6 @@ func setupOVNNode(node *kapi.Node) error {
 		// to finish computation specially with complex acl configuration with port range.
 		fmt.Sprintf("other_config:bundle-idle-timeout=%d",
 			config.Default.OpenFlowProbe),
-		fmt.Sprintf("external_ids:hostname=\"%s\"", node.Name),
 		// If Interconnect feature is enabled, we want to tell ovn-controller to
 		// make this node/chassis as an interconnect gateway.
 		fmt.Sprintf("external_ids:ovn-is-interconn=%s", strconv.FormatBool(config.OVNKubernetesFeature.EnableInterconnect)),
@@ -314,6 +313,12 @@ func setupOVNNode(node *kapi.Node) error {
 		fmt.Sprintf("external_ids:ovn-enable-lflow-cache=%t", config.Default.LFlowCacheEnable),
 		// when creating tunnel ports set local_ip, helps ensures multiple interfaces and ipv6 will work
 		"external_ids:ovn-set-local-ip=\"true\"",
+	}
+
+	// In the case of DPU, the hostname should be that of the DPU and not the K8s Node.
+	// So, skip setting the incorrect hostname.
+	if config.OvnKubeNode.Mode != types.NodeModeDPU {
+		setExternalIdsCmd = append(setExternalIdsCmd, fmt.Sprintf("external_ids:hostname=\"%s\"", node.Name))
 	}
 
 	if config.Default.LFlowCacheLimit > 0 {
