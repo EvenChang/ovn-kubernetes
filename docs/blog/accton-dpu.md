@@ -11,19 +11,19 @@ The purpose of this document is to demonstrate how to use DPU to allocate a Virt
 
 ## Host Environment
 #### Control Plane Node
-OS Version: Ubuntu 20.04.6 LTS
-Linux Kernel Version: 5.4.0-186-generic
-IP Address: 192.168.40.111/22
+- OS Version: Ubuntu 20.04.6 LTS
+- Linux Kernel Version: 5.4.0-186-generic
+- IP Address: 192.168.40.111/22
 
 #### Worker-host Node
-OS Version: Ubuntu 22.04.2 LTS
-Linux Kernel Version: 5.15.0-112-generic
-IP Address: 192.168.42.201/22
+- OS Version: Ubuntu 22.04.2 LTS
+- Linux Kernel Version: 5.15.0-112-generic
+- IP Address: 192.168.42.201/22
 
 #### Worker-dpu Node
-OS Version: Ubuntu 22.04.3 LTS
-Linux Kernel Version: 5.15.0-1021-bluefield
-IP Address: 192.168.41.127/22
+- OS Version: Ubuntu 22.04.3 LTS
+- Linux Kernel Version: 5.15.0-1021-bluefield
+- IP Address: 192.168.41.127/22
 
 ## Architecture
 In this environment, there are two computers: one is an ordinary computer and the other has a BlueField-2 CX6 Card.
