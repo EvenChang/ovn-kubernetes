@@ -116,6 +116,24 @@ ovs-vsctl set Open_vSwitch . other_config:hw-offload=true
 systemctl restart openvswitch.service
 ```
 
+## Create a bridge and attach both the uplink and the PF representor on the DPU
+```
+ubuntu@dpu:~$  sudo ovs-vsctl add-br brp0
+ubuntu@dpu:~$  sudo ip addr add 192.168.41.127/22 dev brp0
+ubuntu@dpu:~$  sudo ovs-vsctl add-port brp0 p0
+ubuntu@dpu:~$  sudo ovs-vsctl add-port brp0 pf0hpf
+ubuntu@dpu:~$  sudo ovs-vsctl show
+aa35917b-16f3-43a8-869a-e169d6a117e3
+    Bridge brp0
+        Port p0
+            Interface p0
+        Port pf0hpf
+            Interface pf0hpf
+        Port brp0
+            Interface brp0
+                type: internal
+```
+
 ## Deploy Kubernetes Cluster
 Use kubeadm to deploy K8S Cluster
 -	Kubernetes Version: v1.25
@@ -335,45 +353,6 @@ Capacity:
   mellanox.com/mlnx_sriov_cx6:  2
 Allocatable:
   mellanox.com/mlnx_sriov_cx6:  2
-```
-## Create a bridge and attach both the uplink and the PF representor on the DPU
-```
-ubuntu@dpu:~$  sudo ovs-vsctl add-br brp0
-ubuntu@dpu:~$  sudo ip addr add 192.168.41.127/22 dev brp0
-ubuntu@dpu:~$  sudo ovs-vsctl add-port brp0 p0
-ubuntu@dpu:~$  sudo ovs-vsctl add-port brp0 pf0hpf
-ubuntu@dpu:~$  sudo ovs-vsctl show
-aa35917b-16f3-43a8-869a-e169d6a117e3
-    Bridge brp0
-        Port p0
-            Interface p0
-        Port pf0hpf
-            Interface pf0hpf
-        Port patch-brp0_ecpaas201-to-br-int
-            Interface patch-brp0_ecpaas201-to-br-int
-                type: patch
-                options: {peer=patch-br-int-to-brp0_ecpaas201}
-        Port brp0
-            Interface brp0
-                type: internal
-    Bridge br-int
-        fail_mode: secure
-        datapath_type: system
-        Port patch-br-int-to-brp0_ecpaas201
-            Interface patch-br-int-to-brp0_ecpaas201
-                type: patch
-                options: {peer=patch-brp0_ecpaas201-to-br-int}
-        Port pf0vf1
-            Interface pf0vf1
-        Port ovn-88005d-0
-            Interface ovn-88005d-0
-                type: geneve
-                options: {csum="true", key=flow, remote_ip="192.168.40.111"}
-        Port br-int
-            Interface br-int
-                type: internal
-        Port ovn-k8s-mp0
-            Interface ovn-k8s-mp0
 ```
 
 ## Deploy POD with OVS hardware-offload
