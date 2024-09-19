@@ -116,7 +116,7 @@ ovs-vsctl set Open_vSwitch . other_config:hw-offload=true
 systemctl restart openvswitch.service
 ```
 
-## Create a bridge and attach both the uplink and the PF representor on the DPU
+-   Create a bridge and attach both the uplink and the PF representor on the DPU
 ```
 ubuntu@dpu:~$  sudo ovs-vsctl add-br brp0
 ubuntu@dpu:~$  sudo ip addr add 192.168.41.127/22 dev brp0
