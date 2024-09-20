@@ -333,12 +333,13 @@ data:
                     "vendors": ["15b3"],
                     "devices": ["101e"],
                     "drivers": ["mlx5_core"],
-                    "pciAddresses": ["0000:02:00.4", "0000:02:00.5"]
+                    "pfNames": ["enp2s0f0np0#1-2"]
                 }
             }
         ]
     }
 ```
+  Note: The `pfNames` specify which VFs can be allocated as resources for the Pod, omitting `VF0`, which is used for `ovn-k8s-mp0`.
 
 -	Apply configMap and SR-IOV daemonset.
 ```
@@ -381,8 +382,43 @@ spec:
         mellanox.com/mlnx_sriov_cx6: '1'
 ```
 
--	You can verify offloaded packets using
+-	You can verify the offloaded packets by using this command on the DPU
 ```
 sudo ovs-appctl dpctl/dump-flows type=offloaded
 ```
 
+- The OVS output on the DPU should look like this
+```
+ubuntu@dpu:~$ sudo ovs-vsctl show
+aa35917b-16f3-43a8-869a-e169d6a117e3
+    Bridge brp0
+        Port pf0hpf
+            Interface pf0hpf
+        Port brp0
+            Interface brp0
+                type: internal
+        Port patch-brp0_ecpaas201-to-br-int
+            Interface patch-brp0_ecpaas201-to-br-int
+                type: patch
+                options: {peer=patch-br-int-to-brp0_ecpaas201}
+        Port p0
+            Interface p0
+    Bridge br-int
+        fail_mode: secure
+        datapath_type: system
+        Port patch-br-int-to-brp0_ecpaas201
+            Interface patch-br-int-to-brp0_ecpaas201
+                type: patch
+                options: {peer=patch-brp0_ecpaas201-to-br-int}
+        Port pf0vf1
+            Interface pf0vf1
+        Port ovn-8c1016-0
+            Interface ovn-8c1016-0
+                type: geneve
+                options: {csum="true", key=flow, local_ip="192.168.41.127", remote_ip="192.168.40.111"}
+        Port ovn-k8s-mp0
+            Interface ovn-k8s-mp0
+        Port br-int
+            Interface br-int
+                type: internal
+```
