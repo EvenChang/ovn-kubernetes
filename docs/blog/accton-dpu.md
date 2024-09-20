@@ -406,6 +406,8 @@ aa35917b-16f3-43a8-869a-e169d6a117e3
     Bridge br-int
         fail_mode: secure
         datapath_type: system
+        Port pf0vf2
+            Interface pf0vf2
         Port patch-br-int-to-brp0_ecpaas201
             Interface patch-br-int-to-brp0_ecpaas201
                 type: patch
