@@ -397,10 +397,10 @@ aa35917b-16f3-43a8-869a-e169d6a117e3
         Port brp0
             Interface brp0
                 type: internal
-        Port patch-brp0_ecpaas201-to-br-int
-            Interface patch-brp0_ecpaas201-to-br-int
+        Port patch-brp0_host-dpu-to-br-int
+            Interface patch-brp0_host-dpu-to-br-int
                 type: patch
-                options: {peer=patch-br-int-to-brp0_ecpaas201}
+                options: {peer=patch-br-int-to-brp0_host-dpu}
         Port p0
             Interface p0
     Bridge br-int
@@ -408,10 +408,10 @@ aa35917b-16f3-43a8-869a-e169d6a117e3
         datapath_type: system
         Port pf0vf2
             Interface pf0vf2
-        Port patch-br-int-to-brp0_ecpaas201
-            Interface patch-br-int-to-brp0_ecpaas201
+        Port patch-br-int-to-brp0_host-dpu
+            Interface patch-br-int-to-brp0_host-dpu
                 type: patch
-                options: {peer=patch-brp0_ecpaas201-to-br-int}
+                options: {peer=patch-brp0_host-dpu-to-br-int}
         Port pf0vf1
             Interface pf0vf1
         Port ovn-8c1016-0
