@@ -227,11 +227,13 @@ nodeSelector:
 ```
 
 #### ovs-node.yaml
--	Only schedule the pod on control-plane node.
+-	In our scenario, it is only scheduled on the control-plane node because our control-plane node does not run OVS directly.
+    If a node is running OVS directly, do not apply this YAML file.
 ```
 nodeSelector: 
   node-role.kubernetes.io/control-plane: ""
 ```
+
 
 #### ovnkube-node-dpu-host.yaml
 - Only a ovnkube-node container
