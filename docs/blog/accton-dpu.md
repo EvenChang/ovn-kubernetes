@@ -312,8 +312,8 @@ lspci -nnvD
     Kernel modules: mlx5_core
 ```
 
-In the previous section, only two Virtual Functions were created.
-One of the Virtual Function will be configured as the OVN Kubernetes management port. Therefore, only configure a single VF in this configMap.
+In the previous section, three Virtual Functions were created.
+One of the Virtual Function will be configured as the OVN Kubernetes management port. Therefore, we configure two VFs in this configMap.
 ```
 cd sriov-network-device-plugin/deployments
 ```
