@@ -111,9 +111,9 @@ sudo ovs-vsctl set Open_vSwitch . external-ids:ovn-gw-nexthop="192.168.40.254"
 
 -	Set hw-offload=true and restart Open vSwitch
 ```
-systemctl enable openvswitch.service
+systemctl enable openvswitch-switch.service
 ovs-vsctl set Open_vSwitch . other_config:hw-offload=true
-systemctl restart openvswitch.service
+systemctl restart openvswitch-switch.service
 ```
 
 -   Create a bridge and attach both the uplink and the PF representor on the DPU
