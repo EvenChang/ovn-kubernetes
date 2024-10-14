@@ -219,6 +219,12 @@ sudo ctr -n=k8s.io images import ovn-k.tar
 ### OVN-Kubernetes YAML file Configuration
 Due to the DPU environment, it is necessary to customize arguments `ovnkube-node-dpu-host.yaml' files
 
+### ovnkube-master.yaml
+```
+- name: OVN_DISABLE_REQUESTEDCHASSIS
+  value: "true"
+```
+
 #### ovnkube-node.yaml
 -	Only schedule the pod on control-plane node.
 ```
